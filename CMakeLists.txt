@@ -4,7 +4,7 @@ project(APIServer)
 
 set(CMAKE_CXX_STANDARD 20)
 
-add_executable(APIServer main.cpp src/APIBase.cpp)
+add_executable(APIServer main.cpp src/APIBase.cpp src/Users.cpp src/Authorization.cpp)
 
 include_directories(include)
 
