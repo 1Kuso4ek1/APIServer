@@ -11,5 +11,5 @@ response_ptr APIBase::render(const http_request& request)
 
     response["message"] = "hello, " + response["user"]["name"].asString();
 
-    return response_ptr(new string_response(response.toStyledString() + "\n", 200, "application/json"));
+    return response_ptr(new string_response(response.toStyledString(), 200, "application/json"));
 }
