@@ -12,14 +12,26 @@
     <link rel="stylesheet" href="style.css">
 
     <h1>Welcome to the API Server</h1>
+    <h2>This is a basic API server that provides some simple endpoints.</h2>
 
     <div class="container">
-        <p>This is a basic API server that provides some simple endpoints.</p>
+        <p>This endpoint greets user with a name.</p>
         
         <input type="text" id="username" placeholder="Enter username">
         <button id="apiCallButton">Make API Call</button>
 
         <div id="apiResponse"></div>
+    </div>
+
+    <div class="container">
+        <p>This is the authorization endpoint.</p>
+        
+        <input type="text" id="usernameKey" placeholder="Enter username">
+        <input type="text" id="apiKey" placeholder="Enter api key">
+        <button id="registerButton">Register</button>
+        <button id="getUserButton">Get User</button>
+
+        <div id="apiKeyResponse"></div>
     </div>
 
     <script src="APICall.js"></script>
