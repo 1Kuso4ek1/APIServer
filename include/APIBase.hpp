@@ -8,6 +8,11 @@ using namespace httpserver;
 
 using response_ptr = std::shared_ptr<http_response>;
 
+namespace Utils
+{
+    Json::Value ParseJson(std::string json);
+}
+
 class APIBase : public http_resource
 {
 public:

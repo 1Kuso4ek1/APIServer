@@ -7,14 +7,17 @@ class Users
 public:
     Users();
 
-    std::string GetNewAPIKey(std::string user);
+    bool AddUser(std::string name, std::string password);
+
+    std::string GetNewAPIKey(std::string name, std::string password);
 
     Json::Value Authenticate(std::string key);
+    Json::Value Authenticate(std::string name, std::string password);
 
 private:
     const std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    Json::Value users;
+    Json::Value users, apiKeys;
 
     std::random_device rd;
     std::mt19937 generator;

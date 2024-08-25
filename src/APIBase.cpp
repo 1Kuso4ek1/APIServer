@@ -1,15 +1,25 @@
 #include <APIBase.hpp>
 
+Json::Value Utils::ParseJson(std::string json)
+{
+    Json::Value ret;
+    Json::CharReaderBuilder rbuilder;
+
+    std::stringstream stream(json);
+    std::string errors;
+
+    bool result = Json::parseFromStream(rbuilder, stream, &ret, &errors);
+
+    ret["ok"] = result;
+    if(!result)
+        ret["error"] = "JSON parsing failed: " + errors;
+
+    return ret;
+}
+
 response_ptr APIBase::render(const http_request& request)
 {
-    Json::Value response;
+    Json::Value requestBody = Utils::ParseJson(std::string(request.get_content()));
 
-    if(!request.get_arg("name").get_all_values().empty())
-        response["user"]["name"] = std::string(request.get_arg("name"));
-    else
-        response["user"]["name"] = "Anonymous";
-
-    response["message"] = "hello, " + response["user"]["name"].asString();
-
-    return response_ptr(new string_response(response.toStyledString(), 200, "application/json"));
+    return response_ptr(new string_response(requestBody.toStyledString(), requestBody["ok"].asBool() ? 200 : 400, "application/json"));
 }
