@@ -44,11 +44,13 @@ response_ptr Authorization::render_GET(const http_request& request)
 
     if(!key.empty())
         response = users->Authenticate(key.substr(7));
-    else
+    if(key.empty() || !response["response"]["auth"].asBool())
     {
-        response["error"] = "Authorization key is not specified";
+        response["error"] = "Authorization failed";
         code = 401;
     }
+
+    response["ok"] = code == 200;
 
     return response_ptr(new string_response(response.toStyledString(), code, "application/json"));
 }

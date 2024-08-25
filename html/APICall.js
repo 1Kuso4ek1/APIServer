@@ -6,6 +6,7 @@ const apiCallButton = document.getElementById("apiCallButton");
 const apiResponse = document.getElementById("apiResponse");
 
 const usernameKeyInput = document.getElementById("usernameKey");
+const passwordKeyInput = document.getElementById("passwordKey");
 const apiKeyInput = document.getElementById("apiKey");
 const registerButton = document.getElementById("registerButton");
 const getUserButton = document.getElementById("getUserButton");
@@ -31,7 +32,15 @@ function APICall()
 
 function Register()
 {
-    fetch(apiKeyAddress + "?user=" + usernameKeyInput.value, { method: "POST" })
+    fetch(apiKeyAddress,
+        {
+            body: JSON.stringify(
+            {
+                name: usernameKeyInput.value,
+                password: passwordKeyInput.value
+            }),
+            method: "POST"
+        })
         .then(response => response.json())
         .then(data => {
             apiKeyResponse.innerHTML = `
