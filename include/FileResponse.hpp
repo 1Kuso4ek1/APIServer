@@ -1,8 +1,6 @@
 #pragma once
 #include "APIBase.hpp"
 
-#include <fstream>
-
 class FileResponse : public http_resource
 {
 public:

@@ -1,5 +1,7 @@
 #pragma once
 #include <json/json.h>
+#include <SQLiteCpp/SQLiteCpp.h>
+#include <memory>
 #include <random>
 
 class Users
@@ -17,7 +19,7 @@ public:
 private:
     const std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    Json::Value users, apiKeys;
+    std::shared_ptr<SQLite::Database> db;
 
     std::random_device rd;
     std::mt19937 generator;
