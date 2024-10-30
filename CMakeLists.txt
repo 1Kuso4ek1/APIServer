@@ -8,7 +8,7 @@ find_package(SQLiteCpp REQUIRED)
 find_package(jsoncpp REQUIRED)
 find_package(Threads REQUIRED)
 
-add_executable(APIServer main.cpp src/APIBase.cpp src/Users.cpp src/Authorization.cpp src/FileResponse.cpp)
+add_executable(APIServer main.cpp src/APIBase.cpp src/Users.cpp src/Authorization.cpp src/FileResponse.cpp src/WebServer.cpp)
 
 include_directories(include)
 

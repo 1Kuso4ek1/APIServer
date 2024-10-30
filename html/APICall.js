@@ -1,9 +1,4 @@
-const apiAddress = "http://localhost:8080/api";
 const apiKeyAddress = "http://localhost:8080/auth";
-
-const usernameInput = document.getElementById("username");
-const apiCallButton = document.getElementById("apiCallButton");
-const apiResponse = document.getElementById("apiResponse");
 
 const usernameKeyInput = document.getElementById("usernameKey");
 const passwordKeyInput = document.getElementById("passwordKey");
@@ -11,24 +6,6 @@ const apiKeyInput = document.getElementById("apiKey");
 const registerButton = document.getElementById("registerButton");
 const getUserButton = document.getElementById("getUserButton");
 const apiKeyResponse = document.getElementById("apiKeyResponse");
-
-function APICall()
-{
-    fetch(apiAddress + "?name=" + usernameInput.value)
-        .then(response => response.json())
-        .then(data => {
-            apiResponse.innerHTML = `
-                <p>API Response:</p>
-                <pre>${ JSON.stringify(data, null, 2) }</pre>
-            `;
-        })
-        .catch(error => {
-            apiResponse.innerHTML = `
-                <p>Error fetching data:</p>
-                <pre>${ error.message }</pre>
-            `;
-        });
-}
 
 function Register()
 {
@@ -81,6 +58,5 @@ function GetUserInfo()
     });
 }
 
-apiCallButton.addEventListener("click", APICall);
 registerButton.addEventListener("click", Register);
 getUserButton.addEventListener("click", GetUserInfo);

@@ -12,3 +12,5 @@ public:
 private:
     Users_ptr users;
 };
+
+using Authorization_ptr = std::shared_ptr<Authorization>;

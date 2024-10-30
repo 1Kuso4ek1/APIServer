@@ -5,6 +5,7 @@
 
 using namespace httpserver;
 
+using webserver_ptr = std::unique_ptr<webserver>;
 using response_ptr = std::shared_ptr<http_response>;
 
 namespace Utils
