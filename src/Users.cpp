@@ -32,6 +32,14 @@ bool Users::AddUser(std::string name, std::string password)
     return true;
 }
 
+bool Users::DeleteUser(int id)
+{
+    SQLite::Statement query(*db, "DELETE FROM users WHERE id = ?");
+    query.bind(1, id);
+
+    return query.exec();
+}
+
 std::string Users::GetNewAPIKey(std::string name, std::string password)
 {
     SQLite::Statement query(*db, "SELECT * FROM users WHERE name = ? AND password = ?");
@@ -69,6 +77,7 @@ Json::Value Users::Authenticate(std::string key)
     if(query.executeStep())
     {
         response["response"]["auth"] = true;
+        response["response"]["user"]["id"] = (int)query.getColumn(0);
         response["response"]["user"]["name"] = (std::string)query.getColumn(1);
         response["response"]["user"]["key"] = (std::string)query.getColumn(3);
         
@@ -93,6 +102,7 @@ Json::Value Users::Authenticate(std::string name, std::string password)
     if(query.executeStep())
     {
         response["response"]["auth"] = true;
+        response["response"]["user"]["id"] = (int)query.getColumn(0);
         response["response"]["user"]["name"] = (std::string)query.getColumn(1);
         response["response"]["user"]["key"] = (std::string)query.getColumn(3);
 

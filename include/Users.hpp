@@ -10,6 +10,7 @@ public:
     Users();
 
     bool AddUser(std::string name, std::string password);
+    bool DeleteUser(int id);
 
     std::string GetNewAPIKey(std::string name, std::string password);
 

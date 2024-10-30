@@ -9,24 +9,10 @@ response_ptr Authorization::render_POST(const http_request& request)
     {
         if(requestBody["ok"].asBool() && !requestBody["name"].asString().empty() && !requestBody["password"].asString().empty())
         {
-            response = users->Authenticate(requestBody["name"].asString(), requestBody["password"].asString());
-            response["ok"] = response["response"]["auth"].asBool();
-
-            if(response["response"]["auth"].asBool())
-            {
-                if(response["response"]["user"]["key"].isNull())
-                    response["response"]["user"]["key"] = users->GetNewAPIKey(requestBody["name"].asString(), requestBody["password"].asString());
-            }
-            else
-            {
-                if(users->AddUser(requestBody["name"].asString(), requestBody["password"].asString()))
-                {
-                    response["ok"] = response["response"]["auth"] = true;
-                    response["response"]["message"] = "User added successfully";
-                }
-                else
-                    response["response"]["error"] = "User with this name already exists";
-            }
+            if(requestBody["action"].asString() == "auth" || requestBody["action"].isNull())
+                response = Authenticate(requestBody["name"].asString(), requestBody["password"].asString());
+            else if(requestBody["action"].asString() == "del")
+                response = DeleteUser(requestBody["name"].asString(), requestBody["password"].asString());
         }
         else
         {
@@ -61,4 +47,53 @@ response_ptr Authorization::render_GET(const http_request& request)
     response["ok"] = code == 200;
 
     return response_ptr(new string_response(response.toStyledString(), code, "application/json"));
+}
+
+Json::Value Authorization::Authenticate(std::string name, std::string password)
+{
+    Json::Value response;
+
+    response = users->Authenticate(name, password);
+    response["ok"] = response["response"]["auth"].asBool();
+
+    if(response["response"]["auth"].asBool())
+    {
+        if(response["response"]["user"]["key"].isNull())
+            response["response"]["user"]["key"] = users->GetNewAPIKey(name, password);
+    }
+    else
+    {
+        if(users->AddUser(name, password))
+        {
+            response["ok"] = response["response"]["auth"] = true;
+            response["response"]["message"] = "User added successfully";
+        }
+        else
+            response["response"]["error"] = "User with this name already exists";
+    }
+
+    return response;
+}
+
+Json::Value Authorization::DeleteUser(std::string name, std::string password)
+{
+    Json::Value response;
+
+    response = users->Authenticate(name, password);
+    response["ok"] = response["response"]["auth"].asBool();
+
+    if(response["response"]["auth"].asBool())
+    {
+        if(users->DeleteUser(response["response"]["user"]["id"].asInt()))
+            response["response"]["message"] = "User deleted successfully";
+        else
+        {
+            response["ok"] = false;
+            response["response"]["error"] = "User deletion failed";
+        }
+    }
+    else
+        response["response"]["error"] = "Authentication failed";
+
+    return response;
 }
