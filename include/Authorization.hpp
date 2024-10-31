@@ -1,11 +1,12 @@
 #pragma once
 #include "APIBase.hpp"
 #include <json/value.h>
+#include <memory>
 
 class Authorization : public http_resource
 {
 public:
-    Authorization(Users_ptr users) : users(users) {}
+    Authorization(Users_ptr users) : users(std::move(users)) {}
 
     response_ptr render_POST(const http_request& request);
     response_ptr render_GET(const http_request& request);
@@ -17,4 +18,4 @@ private:
     Users_ptr users;
 };
 
-using Authorization_ptr = std::shared_ptr<Authorization>;
+using Authorization_ptr = std::unique_ptr<Authorization>;

@@ -27,4 +27,4 @@ private:
     std::uniform_int_distribution<> distribution;
 };
 
-using Users_ptr = std::shared_ptr<Users>;
+using Users_ptr = std::unique_ptr<Users>;

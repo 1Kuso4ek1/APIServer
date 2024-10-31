@@ -1,5 +1,6 @@
 #include <WebServer.hpp>
 #include <httpserver.hpp>
+#include <memory>
 
 WebServer::WebServer(int port) :
     index("../html/index.html", "text/html"), 
@@ -7,8 +8,8 @@ WebServer::WebServer(int port) :
     js   ("../html/APICall.js", "text/javascript"),
 
     server(create_webserver(port)),
-    users (std::make_shared<Users>()),
-    auth  (std::make_shared<Authorization>(users)) {}
+    users (std::make_unique<Users>()),
+    auth  (std::make_unique<Authorization>(std::move(users))) {}
 
 void WebServer::Setup()
 {

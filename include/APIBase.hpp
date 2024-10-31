@@ -5,7 +5,6 @@
 
 using namespace httpserver;
 
-using webserver_ptr = std::unique_ptr<webserver>;
 using response_ptr = std::shared_ptr<http_response>;
 
 namespace Utils
@@ -16,7 +15,7 @@ namespace Utils
 class APIBase : public http_resource
 {
 public:
-    APIBase(Users_ptr users) : users(users) {}
+    APIBase(Users_ptr users) : users(std::move(users)) {}
 
     response_ptr render(const http_request& request);
 
