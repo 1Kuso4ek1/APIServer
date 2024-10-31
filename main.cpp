@@ -2,7 +2,7 @@
 
 int main()
 {
-    WebServer server;
+    WebServer server(8080);
 
     server.Setup();
     server.Run();
