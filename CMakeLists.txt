@@ -18,7 +18,17 @@ find_package(Catch2 3 REQUIRED)
 #     set(CATCH2_LIBRARY Catch2::Catch2)
 # endif()
 
-add_executable(APIServer main.cpp src/APIBase.cpp src/Users.cpp src/Authorization.cpp src/FileResponse.cpp src/WebServer.cpp)
+add_executable(
+    APIServer 
+
+    main.cpp
+    src/APIBase.cpp
+    src/Users.cpp
+    src/Authorization.cpp
+    src/FileResponse.cpp
+    src/WebServer.cpp
+    src/Messaging.cpp)
+
 add_executable(tests tests.cpp)
 
 include_directories(include)

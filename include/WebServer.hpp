@@ -2,6 +2,7 @@
 #include "Authorization.hpp"
 #include "FileResponse.hpp"
 #include "Application.hpp"
+#include "Messaging.hpp"
 
 class WebServer : public Application
 {
@@ -20,5 +21,6 @@ private:
     FileResponse css;
     FileResponse js;
 
+    Messaging_ptr messaging;
     Authorization_ptr auth;
 };

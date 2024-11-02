@@ -20,11 +20,13 @@ public:
 private:
     const std::string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
-    std::shared_ptr<SQLite::Database> db;
+private:
+    std::unique_ptr<SQLite::Database> db;
 
+private:
     std::random_device rd;
     std::mt19937 generator;
     std::uniform_int_distribution<> distribution;
 };
 
-using Users_ptr = std::unique_ptr<Users>;
+using Users_ptr = std::shared_ptr<Users>;

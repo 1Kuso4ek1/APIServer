@@ -10,9 +10,13 @@ response_ptr Authorization::render_POST(const http_request& request)
         if(requestBody["ok"].asBool() && !requestBody["name"].asString().empty() && !requestBody["password"].asString().empty())
         {
             if(requestBody["action"].asString() == "auth" || requestBody["action"].isNull())
+            {
                 response = Authenticate(requestBody["name"].asString(), requestBody["password"].asString());
+            }
             else if(requestBody["action"].asString() == "del")
+            {
                 response = DeleteUser(requestBody["name"].asString(), requestBody["password"].asString());
+            }
         }
         else
         {
@@ -38,6 +42,7 @@ response_ptr Authorization::render_GET(const http_request& request)
 
     if(!key.empty())
         response = users->Authenticate(key.substr(7));
+
     if(key.empty() || !response["response"]["auth"].asBool())
     {
         response["error"] = "Authorization failed";
@@ -59,7 +64,9 @@ Json::Value Authorization::Authenticate(std::string name, std::string password)
     if(response["response"]["auth"].asBool())
     {
         if(response["response"]["user"]["key"].isNull())
+        {
             response["response"]["user"]["key"] = users->GetNewAPIKey(name, password);
+        }
     }
     else
     {

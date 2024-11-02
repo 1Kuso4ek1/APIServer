@@ -8,7 +8,7 @@ Users::Users()
     generator = std::mt19937(rd());
     distribution = std::uniform_int_distribution<>(0, characters.size() - 1);
 
-    db = std::make_shared<SQLite::Database>("users.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
+    db = std::make_unique<SQLite::Database>("database.db", SQLite::OPEN_READWRITE | SQLite::OPEN_CREATE);
     db->exec("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, password TEXT, key TEXT)");
 }
 
